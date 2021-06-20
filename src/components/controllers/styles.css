@@ -1,0 +1,74 @@
+.controller-header-section {
+	background-color: rgba(255, 255, 255, 0.1);
+	color: white;
+	padding: 1rem 1.3rem;
+	font-size: 15px;
+	font-weight: 600;
+}
+.controller-header-section2 {
+	color: white;
+	font-size: 13px;
+}
+.controller-header-section2 p {
+	margin-bottom: 0.6rem;
+	margin-top: 0.5rem;
+}
+.btn-custom {
+	background: transparent;
+	height: 28px;
+	line-height: 20px;
+	text-align: center;
+	vertical-align: middle;
+	padding: 0;
+	width: 50%;
+	border: 1px solid #4b596e;
+	border-radius: 4px;
+	font-size: 19px;
+	color: white;
+	outline: none;
+	transition: color 0.15s ease-in-out, background-color 0.25s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.btn-custom:hover {
+	background-color: rgba(255, 255, 255, 0.1);
+}
+.btn-group > .btn-custom:first-child:not(:last-child) {
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+.btn-group > .btn-custom:last-child:not(:first-child) {
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+/* list style */
+ul {
+	list-style: circle;
+	margin-block-start: 0;
+	padding-inline-start: 0;
+}
+
+.range-controller {
+	color: white;
+}
+.range-controller > label {
+	font-size: 13px;
+	width: 70px;
+	line-height: 1.7rem;
+}
+.range-controller .subtitle {
+	font-size: 13px;
+	width: 30px;
+	line-height: 1.6rem;
+}
+
+.active-img-select-box div {
+	border: 1.5px solid rgb(250, 150, 110);
+	position: relative;
+}
+
+.effect-container img {
+	transition-duration: 0.4s;
+}
+.effect-container img:hover {
+	transform: scale(1.1);
+}
