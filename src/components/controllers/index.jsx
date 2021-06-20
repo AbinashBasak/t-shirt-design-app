@@ -5,13 +5,39 @@ import OutlineBox from '../Form/Outline';
 import ShadowBox from '../Form/Shadow';
 
 import Grid from '@material-ui/core/Grid';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import { makeStyles } from '@material-ui/core/styles';
+import FormControl from '@material-ui/core/FormControl';
 
-import { BiRotateLeft, BiRotateRight } from 'react-icons/bi';
 import { CgEditFlipH, CgEditFlipV } from 'react-icons/cg';
-import { BiArrowToBottom, BiDownArrowAlt, BiArrowToTop, BiUpArrowAlt } from 'react-icons/bi';
+import { BiArrowToBottom, BiDownArrowAlt, BiArrowToTop, BiUpArrowAlt, BiUnderline, BiRotateLeft, BiRotateRight } from 'react-icons/bi';
+import { BsTextLeft, BsTextRight, BsTextCenter, BsTypeBold, BsTypeItalic } from 'react-icons/bs';
 import './styles.css';
 
+const useStyles = makeStyles((theme) => ({
+	root: {
+		margin: '0 0 0 15px',
+		flex: 1,
+		color: 'white',
+		marginTop: '5px',
+		'& .MuiInput-root ': {
+			color: 'white',
+			fontSize: '11px',
+		},
+	},
+	select: {
+		color: 'white',
+	},
+	selectEmpty: {
+		marginTop: theme.spacing(2),
+	},
+}));
+
 const TextControllers = () => {
+	const classes = useStyles();
+	// const fontSizes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 18, 20, 23, 28];
+	const fontSizes = [...Array(10).keys()];
 	const [state, setState] = useState({
 		opacity: 50,
 		exposure: 50,
@@ -30,6 +56,58 @@ const TextControllers = () => {
 
 	return (
 		<div>
+			<div className='controller-header-section'>Font</div>
+			<div className='py-2 px-3 controller-header-section2'>
+				<div className='d-flex justify-content-between align-items-center'>
+					<div className='flex-1 mr-2 btn-group'>
+						<button className='btn-custom' data-toggle='tooltip' data-placement='bottom' title='Bring Forward'>
+							<BsTextLeft />
+						</button>
+						<button className='btn-custom' data-toggle='tooltip' data-placement='bottom' title='Bring top'>
+							<BsTextCenter />
+						</button>
+						<button className='btn-custom' data-toggle='tooltip' data-placement='bottom' title='Send Backward'>
+							<BsTextRight />
+						</button>
+					</div>
+					<div className='flex-1 btn-group'>
+						<button className='btn-custom' data-toggle='tooltip' data-placement='bottom' title='Bring Forward'>
+							<BsTypeBold />
+						</button>
+						<button className='btn-custom' data-toggle='tooltip' data-placement='bottom' title='Bring top'>
+							<BsTypeItalic />
+						</button>
+						<button className='btn-custom' data-toggle='tooltip' data-placement='bottom' title='Send Backward'>
+							<BiUnderline />
+						</button>
+					</div>
+				</div>
+				<div className='w-100 px-1 py-2 d-flex justify-content-between'>
+					<p>Font size</p>
+					<FormControl className={classes.root}>
+						<Select labelId='demo-simple-select-label'>
+							{fontSizes.map((e) => (
+								<MenuItem value={e} key={'font-list-items-' + e}>
+									{e}
+								</MenuItem>
+							))}
+						</Select>
+					</FormControl>
+				</div>
+				<div className='w-100 px-1 py-2 d-flex justify-content-between'>
+					<p>Font Family</p>
+					<FormControl className={classes.root}>
+						<Select labelId='demo-simple-select-label'>
+							{fontSizes.map((e) => (
+								<MenuItem value={e} key={'font-list-items-' + e}>
+									{e}
+								</MenuItem>
+							))}
+						</Select>
+					</FormControl>
+				</div>
+			</div>
+
 			<div className='controller-header-section'>Property</div>
 			<div className='py-2 px-3 controller-header-section2'>
 				<p>Rotate & Flip</p>
@@ -90,8 +168,6 @@ const TextControllers = () => {
 					</li>
 				</ul>
 			</div>
-
-			<div className='controller-header-section mt-3 mb-2'>Adjustment</div>
 		</div>
 	);
 };
@@ -166,6 +242,7 @@ const ImageControllers = () => {
 						<Grid item xs={4} className={state.effect === 'original' ? 'active-img-select-box' : ''}>
 							<div className='h-100 w-100 overflow-hidden'>
 								<img
+									alt='original'
 									src='https://www.iucn.org/sites/dev/files/styles/media_thumbnail/public/content/images/2019/western_tien-shan_sayram-ugam_state_national_nature_park_uzbekistan_c_elena_osipova_small.jpg?itok=iV9mOdTi'
 									width='100%'
 									height='100%'
@@ -176,6 +253,7 @@ const ImageControllers = () => {
 						<Grid item xs={4} className={state.effect === 'grayscale' ? 'active-img-select-box' : ''}>
 							<div className='h-100 w-100 overflow-hidden'>
 								<img
+									alt='grayscale'
 									src='https://www.iucn.org/sites/dev/files/styles/media_thumbnail/public/content/images/2019/western_tien-shan_sayram-ugam_state_national_nature_park_uzbekistan_c_elena_osipova_small.jpg?itok=iV9mOdTi'
 									width='100%'
 									height='100%'
@@ -186,6 +264,7 @@ const ImageControllers = () => {
 						<Grid item xs={4} className={state.effect === 'invert' ? 'active-img-select-box' : ''}>
 							<div className='h-100 w-100 overflow-hidden'>
 								<img
+									alt='invert'
 									src='https://www.iucn.org/sites/dev/files/styles/media_thumbnail/public/content/images/2019/western_tien-shan_sayram-ugam_state_national_nature_park_uzbekistan_c_elena_osipova_small.jpg?itok=iV9mOdTi'
 									width='100%'
 									height='100%'
@@ -198,6 +277,7 @@ const ImageControllers = () => {
 						<Grid item xs={4} className={state.effect === 'sepia' ? 'active-img-select-box' : ''}>
 							<div className='h-100 w-100 overflow-hidden'>
 								<img
+									alt='sepia'
 									src='https://www.iucn.org/sites/dev/files/styles/media_thumbnail/public/content/images/2019/western_tien-shan_sayram-ugam_state_national_nature_park_uzbekistan_c_elena_osipova_small.jpg?itok=iV9mOdTi'
 									width='100%'
 									height='100%'
@@ -208,6 +288,7 @@ const ImageControllers = () => {
 						<Grid item xs={4} className={state.effect === 'blackwhite' ? 'active-img-select-box' : ''}>
 							<div className='h-100 w-100 overflow-hidden'>
 								<img
+									alt='blackwhite'
 									src='https://www.iucn.org/sites/dev/files/styles/media_thumbnail/public/content/images/2019/western_tien-shan_sayram-ugam_state_national_nature_park_uzbekistan_c_elena_osipova_small.jpg?itok=iV9mOdTi'
 									width='100%'
 									height='100%'
@@ -218,6 +299,7 @@ const ImageControllers = () => {
 						<Grid item xs={4} className={state.effect === 'brownie' ? 'active-img-select-box' : ''}>
 							<div className='h-100 w-100 overflow-hidden'>
 								<img
+									alt='brownie'
 									src='https://www.iucn.org/sites/dev/files/styles/media_thumbnail/public/content/images/2019/western_tien-shan_sayram-ugam_state_national_nature_park_uzbekistan_c_elena_osipova_small.jpg?itok=iV9mOdTi'
 									width='100%'
 									height='100%'
@@ -230,6 +312,7 @@ const ImageControllers = () => {
 						<Grid item xs={4} className={state.effect === 'vintage' ? 'active-img-select-box' : ''}>
 							<div className='h-100 w-100 overflow-hidden'>
 								<img
+									alt='vintage'
 									src='https://www.iucn.org/sites/dev/files/styles/media_thumbnail/public/content/images/2019/western_tien-shan_sayram-ugam_state_national_nature_park_uzbekistan_c_elena_osipova_small.jpg?itok=iV9mOdTi'
 									width='100%'
 									height='100%'
@@ -240,6 +323,7 @@ const ImageControllers = () => {
 						<Grid item xs={4} className={state.effect === 'kodachrome' ? 'active-img-select-box' : ''}>
 							<div className='h-100 w-100 overflow-hidden'>
 								<img
+									alt='kodachrome'
 									src='https://www.iucn.org/sites/dev/files/styles/media_thumbnail/public/content/images/2019/western_tien-shan_sayram-ugam_state_national_nature_park_uzbekistan_c_elena_osipova_small.jpg?itok=iV9mOdTi'
 									width='100%'
 									height='100%'
@@ -250,6 +334,7 @@ const ImageControllers = () => {
 						<Grid item xs={4} className={state.effect === 'technicolor' ? 'active-img-select-box' : ''}>
 							<div className='h-100 w-100 overflow-hidden'>
 								<img
+									alt='technicolor'
 									src='https://www.iucn.org/sites/dev/files/styles/media_thumbnail/public/content/images/2019/western_tien-shan_sayram-ugam_state_national_nature_park_uzbekistan_c_elena_osipova_small.jpg?itok=iV9mOdTi'
 									width='100%'
 									height='100%'
@@ -262,6 +347,7 @@ const ImageControllers = () => {
 						<Grid item xs={4} className={state.effect === 'polaroid' ? 'active-img-select-box' : ''}>
 							<div className='h-100 w-100 overflow-hidden'>
 								<img
+									alt='polaroid'
 									src='https://www.iucn.org/sites/dev/files/styles/media_thumbnail/public/content/images/2019/western_tien-shan_sayram-ugam_state_national_nature_park_uzbekistan_c_elena_osipova_small.jpg?itok=iV9mOdTi'
 									width='100%'
 									height='100%'
@@ -336,8 +422,10 @@ const ImageControllers = () => {
 	);
 };
 
-const Controllers = () => {
-	return <TextControllers />;
+const Controllers = ({ activeController }) => {
+	if (activeController === 'Image') return <ImageControllers />;
+	if (activeController === 'Text') return <TextControllers />;
+	return <></>;
 };
 
 export default Controllers;

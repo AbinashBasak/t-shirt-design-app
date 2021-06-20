@@ -1,11 +1,9 @@
-// import { useState, useEffect } from 'react';
-// import { fabric } from 'fabric';
-
 import './App.css';
 
 import SideMenubar from './components/SideMenubar';
 import SideMenubarOptions from './components/SideMenubarOptions';
 import Controller from './components/controllers';
+import Canvas from './components/Canvas';
 
 import { FiDownload } from 'react-icons/fi';
 
@@ -30,7 +28,7 @@ function App() {
 						<div className='bg-light d-flex flex-1' style={{ height: 'calc(100vh - 2.8rem)' }}>
 							<div className='bg-light overflow-auto center' style={{ height: '100%', width: 'calc(100vw - 40.5rem)' }}>
 								<div className='overflow-auto p-0 m-0' style={{ maxWidth: '100%', maxHeight: '100%' }}>
-									<canvas height='700px' width='1200px' style={{ backgroundColor: 'white', border: '1px solid black' }} />
+									<Canvas />
 								</div>
 							</div>
 							<div style={{ width: '18rem' }} className='bg-dark overflow-x-hidden overflow-y-auto'>

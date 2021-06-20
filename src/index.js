@@ -5,9 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import { Provider as ReduxProvider } from 'react-redux';
+import configureStore from './store/configureStore';
+
+const store = configureStore();
+
 ReactDOM.render(
 	<React.StrictMode>
-		<App />
+		<ReduxProvider store={store}>
+			<App />
+		</ReduxProvider>
 	</React.StrictMode>,
 	document.getElementById('root')
 );
