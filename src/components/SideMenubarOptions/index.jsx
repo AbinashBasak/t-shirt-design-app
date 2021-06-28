@@ -1,25 +1,39 @@
+import { connect } from 'react-redux';
+
+import ImageAreaList from './ImageArea';
+import TextAreaList from './TextArea';
+import UploadImageAreaList from './UploadImageArea';
+
+import { activeSidebarTypesList } from 'utils/types';
+
 import './styles.css';
 
-const ImageArea = () => {
-	return (
-		<div className='w-100'>
-			<p className='title text-white container-title px-3 pt-3 mb-2'>Upload Images</p>
-			<div className='px-3 py-2 w-100 upload-btn pt-0'>
-				<input type='file' id='listenLocalImageUploadInput' hidden onChange={(e) => console.log(e)} />
-				<label htmlFor='listenLocalImageUploadInput' className='btn btn-sm w-100'>
-					No file chosen
-				</label>
+const SideMenubarOptions = ({ ActiveSidebar }) => {
+	if (ActiveSidebar === activeSidebarTypesList.text) {
+		return (
+			<div className='bg-dark container-wrapper' style={{ width: '18rem' }}>
+				<TextAreaList />
 			</div>
-		</div>
-	);
-};
+		);
+	}
 
-const SideMenubarOptions = () => {
+	if (ActiveSidebar === activeSidebarTypesList.upload_image) {
+		return (
+			<div className='bg-dark container-wrapper' style={{ width: '18rem' }}>
+				<UploadImageAreaList />
+			</div>
+		);
+	}
+
 	return (
 		<div className='bg-dark container-wrapper' style={{ width: '18rem' }}>
-			<ImageArea />
+			<ImageAreaList />
 		</div>
 	);
 };
 
-export default SideMenubarOptions;
+const mapStateToProps = ({ ActiveSidebar }) => {
+	return { ActiveSidebar };
+};
+
+export default connect(mapStateToProps)(SideMenubarOptions);

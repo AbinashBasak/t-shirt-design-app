@@ -1,11 +1,13 @@
 import { combineReducers } from 'redux';
 
-import activeEditOptions from './activeEditOptionReducer';
+import ActiveSidebar from './activeSidebarReducer';
 import canvas from './canvasReducer';
+import drawOnCanvasStatus from './drawOnCanvasReducer';
 
 const rootReducer = combineReducers({
-	activeEditOptions,
+	ActiveSidebar,
 	canvas,
+	drawOnCanvasStatus,
 });
 
 export default rootReducer;

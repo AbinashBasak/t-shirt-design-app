@@ -31,9 +31,7 @@ function App() {
 									<Canvas />
 								</div>
 							</div>
-							<div style={{ width: '18rem' }} className='bg-dark overflow-x-hidden overflow-y-auto'>
-								<Controller />
-							</div>
+							<Controller />
 						</div>
 					</div>
 				</div>

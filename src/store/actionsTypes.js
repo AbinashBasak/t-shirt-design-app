@@ -1,7 +1,13 @@
-const activeEditOptionsSection = {
-	image: 'ACTIVE_IMAGE_CONTROLLER',
-	text: 'ACTIVE_TEXT_CONTROLLER',
-	empty: 'CONTROLLER_DEACTIVE',
+const activeSidebar = {
+	image: 'ACTIVE_SIDEBAR_IMAGE',
+	text: 'ACTIVE_SIDEBAR_TEXT',
+	upload_image: 'ACTIVE_SIDEBAR_UPLOAD_IMAGE',
 };
 
-export { activeEditOptionsSection };
+const activeDrawAction = {
+	image: 'DRAW_IMAGE',
+	text: 'DRAW_TEXT',
+	empty: 'DRAW_NONE',
+};
+
+export { activeSidebar, activeDrawAction };
