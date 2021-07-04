@@ -32,7 +32,7 @@ const Canvas = ({ setCanvas, canvas }) => {
 			fontSize: textData.fontSize,
 			top: posY,
 			left: posX,
-			stroke: 'black',
+			stroke: '#000000',
 			zIndex: 1,
 		});
 		canvas.add(text);

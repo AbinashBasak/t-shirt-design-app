@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Card from '@material-ui/core/Card';
@@ -32,29 +32,48 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const Outline = () => {
+const Outline = ({ applyFilterOnCanvas, data }) => {
 	const classes = useStyles();
-	const [expanded, setExpanded] = useState(true);
-	const [width, setWidth] = useState(0);
-	const [color, setColor] = useState('#000000');
+	const colorRef = useRef(null);
+	const [state, setstate] = useState({ active: false, width: 0 });
+
+	useEffect(() => {
+		if (!colorRef.current) return;
+		setstate(data);
+		colorRef.current.value = data.color;
+	}, [data]);
+
+	const updateStateAndApplyFilter = (name, value) => {
+		if (name === 'active' && value) {
+			applyFilterOnCanvas('strokeWidth', name === 'width' ? value : state.width);
+			applyFilterOnCanvas('stroke', colorRef.current.value);
+		} else if (name === 'width' && state.active) {
+			applyFilterOnCanvas('strokeWidth', name === 'width' ? value : state.width);
+		} else {
+			applyFilterOnCanvas('strokeWidth', 0);
+		}
+		setstate((prev) => {
+			return { ...prev, [name]: value };
+		});
+	};
 
 	return (
 		<Card className={classes.root}>
 			<CardActions>
 				<p className={classes.title}>Outline</p>
-				<Switch checked={expanded} onChange={(e) => setExpanded(e.target.checked)} />
+				<Switch checked={state.active} onChange={(e) => updateStateAndApplyFilter('active', e.target.checked)} />
 			</CardActions>
-			<Collapse in={expanded} timeout='auto' unmountOnExit>
+			<Collapse in={state.active} timeout='auto'>
 				<CardActions>
 					<p className={classes.title}>Color</p>
-					<input type='color' value={color} onChange={(e) => setColor(e.target.value)} />
+					<input type='color' ref={colorRef} onChange={(e) => applyFilterOnCanvas('stroke', e.target.value)} />
 				</CardActions>
 				<CardActions>
 					<p className={classes.title}>width</p>
 					<div className='flex-1 center'>
-						<InputSlider value={width} name='width' onChange={(e, val) => setWidth(val)} aria-labelledby='input-slider' />
+						<InputSlider value={state.width} name='width' max={5} onChange={(e, val) => updateStateAndApplyFilter('width', val)} aria-labelledby='input-slider' />
 					</div>
-					<span className={classes.subtitle}>{width}</span>
+					<span className={classes.subtitle}>{state.width}</span>
 				</CardActions>
 			</Collapse>
 		</Card>

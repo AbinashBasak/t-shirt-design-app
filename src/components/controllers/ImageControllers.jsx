@@ -13,6 +13,7 @@ import './styles.css';
 const fabricFilter = fabric.Image.filters;
 
 const ImageControllers = ({ canvas, filters }) => {
+	// all data
 	const [state, setState] = useState({
 		obj: null,
 		opacity: 100,
@@ -26,6 +27,7 @@ const ImageControllers = ({ canvas, filters }) => {
 		effect: 0,
 	});
 
+	// set value of selected item
 	useEffect(() => {
 		if (!canvas) return;
 
@@ -57,6 +59,7 @@ const ImageControllers = ({ canvas, filters }) => {
 		setState(obj);
 	}, [filters, canvas]);
 
+	// apply filters on Image
 	const applyFilterOnCanvas = async (name, val, index, filterName) => {
 		try {
 			if (state.obj.filters[index]) {
@@ -69,6 +72,7 @@ const ImageControllers = ({ canvas, filters }) => {
 		} catch (error) {}
 	};
 
+	// change opacity of image
 	const applyOpacityOnImageCanvas = async (name, val) => {
 		try {
 			state.obj.set(name, val);
@@ -76,6 +80,7 @@ const ImageControllers = ({ canvas, filters }) => {
 		} catch (error) {}
 	};
 
+	// handel imput change
 	const handleInputChange = (name, val) => {
 		setState((prevState) => ({ ...prevState, ...{ [name]: val } }));
 		switch (name) {
@@ -105,6 +110,7 @@ const ImageControllers = ({ canvas, filters }) => {
 		}
 	};
 
+	// apply iamge effect =>
 	const applyImageEffect = (index, name) => {
 		try {
 			setState((prevState) => ({ ...prevState, ...{ effect: index } }));

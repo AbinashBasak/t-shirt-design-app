@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Card from '@material-ui/core/Card';
@@ -31,37 +31,65 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const Shadow = () => {
+const Shadow = ({ applyFilterOnCanvas, data }) => {
 	const classes = useStyles();
-	const [expanded, setExpanded] = useState(true);
-	const [radius, setRadius] = useState(0);
-	const [blur, setBlur] = useState(0);
-	const [color, setColor] = useState('#000000');
+	const colorRef = useRef(null);
+	const [state, setstate] = useState({ active: true, x: 5, y: 5, blur: 0 });
+
+	useEffect(() => {
+		if (!colorRef.current) return;
+		setstate(data);
+		colorRef.current.value = data.color;
+	}, [data]);
+
+	const applyFilter = (name = '', val = '') => {
+		const currentState = { ...state, [name]: val };
+		applyFilterOnCanvas('shadow', `${colorRef.current.value} ${currentState.x}px ${currentState.y}px ${currentState.blur}px`);
+	};
+
+	const updateStateAndApplyFilter = (name, value) => {
+		if (name === 'active' && value === false) {
+			applyFilterOnCanvas('shadow', undefined);
+		} else {
+			applyFilter(name, value);
+		}
+
+		setstate((prev) => {
+			return { ...prev, [name]: value };
+		});
+	};
 
 	return (
 		<Card className={classes.root}>
 			<CardActions>
 				<p className={classes.title}>Shadow</p>
-				<Switch checked={expanded} onChange={(e) => setExpanded(e.target.checked)} />
+				<Switch checked={state.active} onChange={(e) => updateStateAndApplyFilter('active', e.target.checked)} />
 			</CardActions>
-			<Collapse in={expanded} timeout='auto' unmountOnExit>
+			<Collapse in={state.active} timeout='auto'>
 				<CardActions>
 					<p className={classes.title}>Color</p>
-					<input type='color' value={color} onChange={(e) => setColor(e.target.value)} />
+					<input type='color' ref={colorRef} onChange={applyFilter} />
 				</CardActions>
 				<CardActions>
-					<p className={classes.title}>Radius</p>
+					<p className={classes.title}>offsetX</p>
 					<div className='flex-1 center'>
-						<InputSlider value={radius} name='width' onChange={(e, val) => setRadius(val)} aria-labelledby='input-slider' />
+						<InputSlider value={state.x} name='x' min={-20} max={20} onChange={(e, val) => updateStateAndApplyFilter('x', val)} aria-labelledby='input-slider' />
 					</div>
-					<span className={classes.subtitle}>{radius}</span>
+					<span className={classes.subtitle}>{state.x}</span>
+				</CardActions>
+				<CardActions>
+					<p className={classes.title}>offsetY</p>
+					<div className='flex-1 center'>
+						<InputSlider value={state.y} name='y' min={-20} max={20} onChange={(e, val) => updateStateAndApplyFilter('y', val)} aria-labelledby='input-slider' />
+					</div>
+					<span className={classes.subtitle}>{state.y}</span>
 				</CardActions>
 				<CardActions>
 					<p className={classes.title}>Blur</p>
 					<div className='flex-1 center'>
-						<InputSlider value={blur} name='width' onChange={(e, val) => setBlur(val)} aria-labelledby='input-slider' />
+						<InputSlider value={state.blur} name='blur' max={30} onChange={(e, val) => updateStateAndApplyFilter('blur', val)} aria-labelledby='input-slider' />
 					</div>
-					<span className={classes.subtitle}>{blur}</span>
+					<span className={classes.subtitle}>{state.blur}</span>
 				</CardActions>
 			</Collapse>
 		</Card>
